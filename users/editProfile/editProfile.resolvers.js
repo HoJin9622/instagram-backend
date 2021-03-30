@@ -9,7 +9,6 @@ export default {
       { firstName, lastName, username, email, password: newPassword },
       { loggedInUser }
     ) => {
-      console.log(loggedInUser)
       let uglyPassword = null
       if (newPassword) {
         uglyPassword = await bcrypt.hash(newPassword, 10)
