@@ -1,11 +1,11 @@
-import bcrypt from 'bcrypt'
-import client from '../../client'
+import * as bcrypt from 'bcrypt'
+import { Resolver } from '../../types'
 import { protectedResolver } from '../users.utils'
 
-const resolverFn = async (
+const resolverFn: Resolver = async (
   _,
   { firstName, lastName, username, email, password: newPassword },
-  { loggedInUser }
+  { loggedInUser, client }
 ) => {
   let uglyPassword = null
   if (newPassword) {
