@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import client from '../client'
 
-export const getUser = async token => {
+export const getUser = async (token) => {
   try {
     if (!token) {
       return null
@@ -18,8 +18,17 @@ export const getUser = async token => {
   }
 }
 
-export const protectResolver = user => {
-  if (!user) {
-    throw new Error('You need to login.')
+export const protectedResolver = (ourResolver) => (
+  root,
+  args,
+  context,
+  info
+) => {
+  if (!context.loggedInUser) {
+    return {
+      ok: false,
+      error: 'Please log in to perform this action.',
+    }
   }
+  return ourResolver(root, args, context, info)
 }
