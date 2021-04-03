@@ -2,11 +2,28 @@ import { Resolvers } from '../types'
 
 const resolvers: Resolvers = {
   User: {
-    totalFollowing: (root) => {
-      console.log(root.username)
-      return 0
+    totalFollowing: ({ id }, _, { client }) =>
+      client.user.count({
+        where: {
+          followers: {
+            some: { id },
+          },
+        },
+      }),
+    totalFollowers: ({ id }, _, { client }) =>
+      client.user.count({
+        where: {
+          following: {
+            some: { id },
+          },
+        },
+      }),
+    isMe: ({ id }, _, { loggedInUser }) => {
+      if (!loggedInUser) {
+        return false
+      }
+      return id === loggedInUser.id
     },
-    totalFollowers: () => 999,
   },
 }
 
