@@ -1,7 +1,8 @@
 import { gql } from 'apollo-server-core'
 
 export default gql`
-  type Mutation {
-    toogleLike(id: Int!): MutationResponse!
+  type MutationResponse {
+    ok: Boolean!
+    error: String
   }
 `
