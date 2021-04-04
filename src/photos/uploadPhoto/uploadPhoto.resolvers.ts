@@ -6,9 +6,26 @@ const resolvers: Resolvers = {
     uploadPhoto: protectedResolver(
       async (_, { file, caption }, { loggedInUser, client }) => {
         if (caption) {
-          /// parse caption
-          // get or create Hashtags
+          const hashtags = caption.match(/#[\w]+/g)
         }
+        client.photo.create({
+          data: {
+            file,
+            caption,
+            hashtags: {
+              connectOrCreate: [
+                {
+                  where: {
+                    hashtag: '#food',
+                  },
+                  create: {
+                    hashtag: '#food',
+                  },
+                },
+              ],
+            },
+          },
+        })
         // save the photo with parsed hashtags
         // add the photo to the hashtags
       }
