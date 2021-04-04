@@ -11,12 +11,9 @@ const resolvers: Resolvers = {
           include: { hashtags: { select: { hashtag: true } } },
         })
         if (!oldPhoto) {
-          return {
-            ok: false,
-            error: 'Photo not found.',
-          }
+          return { ok: false, error: 'Photo not found.' }
         }
-        const photo = await client.photo.update({
+        await client.photo.update({
           where: { id },
           data: {
             caption,
@@ -26,7 +23,7 @@ const resolvers: Resolvers = {
             },
           },
         })
-        console.log(photo)
+        return { ok: true }
       }
     ),
   },
