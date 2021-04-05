@@ -18,3 +18,11 @@ export type Resolvers = {
     [key: string]: Resolver
   }
 }
+
+export type Subscription = {
+  [key: string]: {
+    [key: string]: {
+      [key: string]: () => any
+    }
+  }
+}

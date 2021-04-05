@@ -5,6 +5,7 @@ import { ApolloServer } from 'apollo-server-express'
 import client from './client'
 import { typeDefs, resolvers } from './schema'
 import { getUser } from './users/users.utils'
+import pubsub from './pubsub'
 
 const PORT = process.env.PORT
 const apollo = new ApolloServer({
@@ -21,6 +22,7 @@ const apollo = new ApolloServer({
 const app = express()
 app.use(logger('tiny'))
 apollo.applyMiddleware({ app })
+apollo.installSubscriptionHandlers(app)
 app.use('/static', express.static('uploads'))
 app.listen({ port: PORT }, () =>
   console.log(`🚀 Server is running on http://localhost:${PORT}/ ✅`)
